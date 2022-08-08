@@ -25,15 +25,14 @@ class CryoPlot(PyDMTimePlot):
         self.showLegend = True
         self.setUpdatesAsynchronously(True)
         self.setPlotTitle(f"CM{cryomodule.name}")
-        self.ds_ll_curve = self.addYChannel(y_channel=cryomodule.dsLevelPV,
-                                            yAxisName="Liquid Level (%)")
-        self.us_ll_curve = self.addYChannel(y_channel=cryomodule.usLevelPV,
-                                            yAxisName="Liquid Level (%)")
-        self.aact_curve = self.addYChannel(y_channel=cryomodule.pvPrefix
-                                                     + "AACTMEANSUM",
-                                           yAxisName="Amplitude (MV)")
-        self.jt_curve = self.addYChannel(y_channel=cryomodule.jtValveReadbackPV,
-                                         yAxisName="JT (%)")
+        self.addYChannel(y_channel=cryomodule.dsLevelPV,
+                         yAxisName="DS Liquid Level (%)").setUpdatesAsynchronously(True)
+        self.addYChannel(y_channel=cryomodule.usLevelPV,
+                         yAxisName="US Liquid Level (%)").setUpdatesAsynchronously(True)
+        self.addYChannel(y_channel=cryomodule.pvPrefix + "AACTMEANSUM",
+                         yAxisName="Amplitude (MV)").setUpdatesAsynchronously(True)
+        self.addYChannel(y_channel=cryomodule.jtValveReadbackPV,
+                         yAxisName="JT (%)").setUpdatesAsynchronously(True)
 
 
 class CryoSignals(Display):
