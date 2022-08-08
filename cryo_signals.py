@@ -23,16 +23,37 @@ class CryoPlot(PyDMTimePlot):
         super().__init__()
         self.setTimeSpan(600)
         self.showLegend = True
-        self.setUpdatesAsynchronously(True)
         self.setPlotTitle(f"CM{cryomodule.name}")
-        self.addYChannel(y_channel=cryomodule.dsLevelPV,
-                         yAxisName="DS Liquid Level (%)").setUpdatesAsynchronously(True)
-        self.addYChannel(y_channel=cryomodule.usLevelPV,
-                         yAxisName="US Liquid Level (%)").setUpdatesAsynchronously(True)
-        self.addYChannel(y_channel=cryomodule.pvPrefix + "AACTMEANSUM",
-                         yAxisName="Amplitude (MV)").setUpdatesAsynchronously(True)
-        self.addYChannel(y_channel=cryomodule.jtValveReadbackPV,
-                         yAxisName="JT (%)").setUpdatesAsynchronously(True)
+        
+        self.ds_axis = self.addAxis(plot_data_item=None, name="DS Level",
+                                    orientation="left",
+                                    label="DS Liquid Level (%)", min_range=85, max_range=95,
+                                    enable_auto_range=False)
+        self.ds_curve = self.addYChannel(y_channel=cryomodule.dsLevelPV, yAxisName="DS Level")
+        self.ds_curve.setUpdatesAsynchronously(True)
+        
+        self.ds_axis = self.addAxis(plot_data_item=None, name="US Level",
+                                    orientation="left",
+                                    label="US Liquid Level (%)", min_range=60, max_range=75,
+                                    enable_auto_range=False)
+        self.us_curve = self.addYChannel(y_channel=cryomodule.usLevelPV, yAxisName="US Level")
+        self.us_curve.setUpdatesAsynchronously(True)
+        
+        self.aact_axis = self.addAxis(plot_data_item=None, name="Amplitude Sum",
+                                      orientation="right",
+                                      label="Amplitude Sum (MV)", min_range=0, max_range=133,
+                                      enable_auto_range=False)
+        self.aact_curve = self.addYChannel(y_channel=cryomodule.pvPrefix + "AACTMEANSUM",
+                                           yAxisName="Amplitude Sum")
+        self.aact_curve.setUpdatesAsynchronously(True)
+        
+        self.jt_axis = self.addAxis(plot_data_item=None, name="JT Position",
+                                    orientation="right",
+                                    label="JT Position (%)", min_range=0, max_range=100,
+                                    enable_auto_range=False)
+        self.jt_curve = self.addYChannel(y_channel=cryomodule.jtValveReadbackPV,
+                                         yAxisName="JT Position")
+        self.jt_curve.setUpdatesAsynchronously(True)
 
 
 class CryoSignals(Display):
