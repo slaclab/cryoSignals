@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Form</class>
+ <widget class="QWidget" name="Form">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>400</width>
+    <height>300</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Cryo Signals</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <item row="1" column="1">
+    <widget class="QLabel" name="label">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="text">
+      <string>Minutes to plot:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="2">
+    <widget class="QSpinBox" name="minute_spinbox">
+     <property name="maximum">
+      <number>1440</number>
+     </property>
+     <property name="value">
+      <number>10</number>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="0">
+    <spacer name="horizontalSpacer">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>40</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="1" column="3">
+    <spacer name="horizontalSpacer_2">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>40</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="0" column="0" colspan="4">
+    <widget class="QLabel" name="label_16">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(175, 217, 248)</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="0" colspan="4">
+    <widget class="QTabWidget" name="tabWidget">
+     <property name="currentIndex">
+      <number>0</number>
+     </property>
+     <widget class="QWidget" name="l0b_tab">
+      <attribute name="title">
+       <string>L0B</string>
+      </attribute>
+     </widget>
+     <widget class="QWidget" name="l1b_tab">
+      <attribute name="title">
+       <string>L1B</string>
+      </attribute>
+     </widget>
+     <widget class="QWidget" name="l2b_tab">
+      <attribute name="title">
+       <string>L2B</string>
+      </attribute>
+     </widget>
+     <widget class="QWidget" name="l3b_tab">
+      <attribute name="title">
+       <string>L3B</string>
+      </attribute>
+     </widget>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
