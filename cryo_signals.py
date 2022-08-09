@@ -7,6 +7,8 @@ from lcls_tools.superconducting.scLinac import (CRYOMODULE_OBJECTS, Cryomodule,
                                                 L0B, L1B, L1BHL, L2B, L3B)
 from pydm import Display
 from pydm.widgets import PyDMTimePlot
+from pydm.widgets.baseplot import BasePlotAxisItem
+from pydm.widgets.timeplot import TimePlotCurveItem
 
 
 def get_dimensions(options: List[str]):
@@ -24,20 +26,22 @@ class CryoPlot(PyDMTimePlot):
         self.setTimeSpan(600)
         self.showLegend = True
         self.setPlotTitle(f"CM{cryomodule.name}")
+        self.setUpdatesAsynchronously(True)
+        self.setAutoRangeY(False)
         
-        self.ds_axis = self.addAxis(plot_data_item=None, name="DS Level",
-                                    orientation="left",
-                                    label="DS Liquid Level (%)", min_range=85, max_range=95,
-                                    enable_auto_range=False)
-        self.ds_curve = self.addYChannel(y_channel=cryomodule.dsLevelPV, yAxisName="DS Level")
+        self.ds_curve: TimePlotCurveItem = self.addYChannel(y_channel=cryomodule.dsLevelPV,
+                                                            yAxisName="DS Level")
         self.ds_curve.setUpdatesAsynchronously(True)
+        self.ds_axis: BasePlotAxisItem = self.plotItem.getAxis("DS Level")
+        self.ds_axis.setRange(85, 95)
+        self.ds_axis.setLabel(text="DS Liquid Level", units="%")
         
-        self.ds_axis = self.addAxis(plot_data_item=None, name="US Level",
-                                    orientation="left",
-                                    label="US Liquid Level (%)", min_range=60, max_range=75,
-                                    enable_auto_range=False)
-        self.us_curve = self.addYChannel(y_channel=cryomodule.usLevelPV, yAxisName="US Level")
+        self.us_curve = self.addYChannel(y_channel=cryomodule.usLevelPV,
+                                         yAxisName="US Level")
         self.us_curve.setUpdatesAsynchronously(True)
+        self.us_axis: BasePlotAxisItem = self.plotItem.getAxis("US Level")
+        self.us_axis.setRange(60, 75)
+        self.us_axis.setLabel("US Liquid Level", units="%")
         
         self.aact_axis = self.addAxis(plot_data_item=None, name="Amplitude Sum",
                                       orientation="right",
@@ -46,7 +50,7 @@ class CryoPlot(PyDMTimePlot):
         self.aact_curve = self.addYChannel(y_channel=cryomodule.pvPrefix + "AACTMEANSUM",
                                            yAxisName="Amplitude Sum")
         self.aact_curve.setUpdatesAsynchronously(True)
-        
+        #
         self.jt_axis = self.addAxis(plot_data_item=None, name="JT Position",
                                     orientation="right",
                                     label="JT Position (%)", min_range=0, max_range=100,
