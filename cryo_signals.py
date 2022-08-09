@@ -51,7 +51,7 @@ class CryoPlot(PyDMTimePlot):
         
         self.ds_axis = self.addAxis(plot_data_item=None, name="US Level",
                                     orientation="right",
-                                    label="US Liquid Level (%)", min_range=60, max_range=75,
+                                    label="US Liquid Level (%)", min_range=60, max_range=80,
                                     enable_auto_range=False)
         self.us_curve = self.addYChannel(y_channel=cryomodule.usLevelPV, yAxisName="US Level")
         self.us_curve.setUpdatesAsynchronously(True)
