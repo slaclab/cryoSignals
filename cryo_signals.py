@@ -2,7 +2,7 @@ from typing import Dict, List
 
 import numpy as np
 from PyQt5.QtCore import pyqtSlot
-from PyQt5.QtWidgets import QFormLayout, QGridLayout, QHBoxLayout, QWidget
+from PyQt5.QtWidgets import QFormLayout, QGridLayout, QVBoxLayout, QWidget
 from lcls_tools.superconducting.scLinac import (CRYOMODULE_OBJECTS, Cryomodule,
                                                 L0B, L1B, L1BHL, L2B, L3B)
 from pydm import Display
@@ -93,7 +93,7 @@ class CryoSignals(Display):
             col_count = get_dimensions(cryo_list)
             
             for cryo_idx, cryo_name in enumerate(cryo_list):
-                cm_layout = QHBoxLayout()
+                cm_layout = QVBoxLayout()
                 cryomodule = CRYOMODULE_OBJECTS[cryo_name]
                 cryo_plot = CryoPlot(cryomodule)
                 readbacks = CryoReadbacks(cryomodule).main_layout
