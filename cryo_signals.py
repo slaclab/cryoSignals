@@ -26,7 +26,7 @@ class CryoReadbacks():
         for pv in [cryomodule.dsLevelPV, cryomodule.usLevelPV,
                    cryomodule.pvPrefix + "AACTMEANSUM",
                    cryomodule.jtValveReadbackPV]:
-            label = PyDMLabel(pv)
+            label = PyDMLabel(init_channel=pv)
             label.alarmSensitiveContent = True
             self.main_layout.addRow(pv, label)
 
