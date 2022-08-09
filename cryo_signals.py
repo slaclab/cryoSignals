@@ -43,14 +43,14 @@ class CryoPlot(PyDMTimePlot):
         self.setShowXGrid(True)
         
         self.ds_axis = self.addAxis(plot_data_item=None, name="DS Level",
-                                    orientation="left",
+                                    orientation="right",
                                     label="DS Liquid Level (%)", min_range=85, max_range=95,
                                     enable_auto_range=False)
         self.ds_curve = self.addYChannel(y_channel=cryomodule.dsLevelPV, yAxisName="DS Level")
         self.ds_curve.setUpdatesAsynchronously(True)
         
         self.ds_axis = self.addAxis(plot_data_item=None, name="US Level",
-                                    orientation="left",
+                                    orientation="right",
                                     label="US Liquid Level (%)", min_range=60, max_range=75,
                                     enable_auto_range=False)
         self.us_curve = self.addYChannel(y_channel=cryomodule.usLevelPV, yAxisName="US Level")
@@ -96,9 +96,9 @@ class CryoSignals(Display):
                 cm_layout = QVBoxLayout()
                 cryomodule = CRYOMODULE_OBJECTS[cryo_name]
                 cryo_plot = CryoPlot(cryomodule)
-                readbacks = CryoReadbacks(cryomodule).main_layout
+                # readbacks = CryoReadbacks(cryomodule).main_layout
                 cm_layout.addWidget(cryo_plot)
-                cm_layout.addLayout(readbacks)
+                # cm_layout.addLayout(readbacks)
                 grid_layout.addLayout(cm_layout, int(cryo_idx / col_count),
                                       cryo_idx % col_count)
                 self.plots[cryo_name] = cryo_plot
