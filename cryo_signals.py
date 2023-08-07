@@ -3,8 +3,8 @@ from typing import Dict, List
 import numpy as np
 from PyQt5.QtCore import pyqtSlot
 from PyQt5.QtWidgets import QFormLayout, QGridLayout, QVBoxLayout, QWidget
-from lcls_tools.superconducting.scLinac import (CRYOMODULE_OBJECTS, Cryomodule,
-                                                L0B, L1B, L1BHL, L2B, L3B)
+from lcls_tools.superconducting.scLinac import (CRYOMODULE_OBJECTS, Cryomodule)
+from lcls_tools.superconducting.sc_linac_utils import L0B, L1B, L1BHL, L2B, L3B
 from pydm import Display
 from pydm.widgets import PyDMLabel, PyDMTimePlot
 
@@ -23,9 +23,9 @@ class CryoReadbacks():
         super().__init__()
         self.main_layout: QFormLayout = QFormLayout()
         
-        for pv in [cryomodule.dsLevelPV, cryomodule.usLevelPV,
-                   cryomodule.pvPrefix + "AACTMEANSUM",
-                   cryomodule.jtValveReadbackPV]:
+        for pv in [cryomodule.ds_level_pv, cryomodule.us_level_pv,
+                   cryomodule.pv_addr("AACTMEANSUM"),
+                   cryomodule.jt_valve_readback_pv]:
             label = PyDMLabel(init_channel=pv)
             label.alarmSensitiveContent = True
             self.main_layout.addRow(pv, label)
@@ -46,21 +46,21 @@ class CryoPlot(PyDMTimePlot):
                                     orientation="right",
                                     label="DS Liquid Level (%)", min_range=85, max_range=95,
                                     enable_auto_range=False)
-        self.ds_curve = self.addYChannel(y_channel=cryomodule.dsLevelPV, yAxisName="DS Level")
+        self.ds_curve = self.addYChannel(y_channel=cryomodule.ds_level_pv, yAxisName="DS Level")
         self.ds_curve.setUpdatesAsynchronously(True)
         
         self.ds_axis = self.addAxis(plot_data_item=None, name="US Level",
                                     orientation="right",
                                     label="US Liquid Level (%)", min_range=60, max_range=80,
                                     enable_auto_range=False)
-        self.us_curve = self.addYChannel(y_channel=cryomodule.usLevelPV, yAxisName="US Level")
+        self.us_curve = self.addYChannel(y_channel=cryomodule.us_level_pv, yAxisName="US Level")
         self.us_curve.setUpdatesAsynchronously(True)
         
         self.aact_axis = self.addAxis(plot_data_item=None, name="Amplitude Sum",
                                       orientation="right",
                                       label="Amplitude Sum (MV)", min_range=0, max_range=133,
                                       enable_auto_range=False)
-        self.aact_curve = self.addYChannel(y_channel=cryomodule.pvPrefix + "AACTMEANSUM",
+        self.aact_curve = self.addYChannel(y_channel=cryomodule.pv_addr("AACTMEANSUM"),
                                            yAxisName="Amplitude Sum")
         self.aact_curve.setUpdatesAsynchronously(True)
         #
@@ -68,7 +68,7 @@ class CryoPlot(PyDMTimePlot):
                                     orientation="right",
                                     label="JT Position (%)", min_range=0, max_range=100,
                                     enable_auto_range=False)
-        self.jt_curve = self.addYChannel(y_channel=cryomodule.jtValveReadbackPV,
+        self.jt_curve = self.addYChannel(y_channel=cryomodule.jt_valve_readback_pv,
                                          yAxisName="JT Position")
         self.jt_curve.setUpdatesAsynchronously(True)
 
