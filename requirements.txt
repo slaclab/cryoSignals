@@ -1,7 +1,6 @@
 numpy
 typing
 pydm
-yaml
 pyyaml
 pydantic
 h5py
