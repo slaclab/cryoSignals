@@ -3,10 +3,11 @@ from typing import Dict, List
 import numpy as np
 from PyQt5.QtCore import pyqtSlot
 from PyQt5.QtWidgets import QFormLayout, QGridLayout, QVBoxLayout, QWidget
-from lcls_tools.superconducting.scLinac import (CRYOMODULE_OBJECTS, Cryomodule)
-from lcls_tools.superconducting.sc_linac_utils import L0B, L1B, L1BHL, L2B, L3B
 from pydm import Display
 from pydm.widgets import PyDMLabel, PyDMTimePlot
+
+from lcls_tools.superconducting.sc_linac import MACHINE, Cryomodule
+from lcls_tools.superconducting.sc_linac_utils import L0B, L1B, L1BHL, L2B, L3B
 
 
 def get_dimensions(options: List[str]):
@@ -83,7 +84,7 @@ class CryoSignals(Display):
         tab_map: List[QWidget] = [self.ui.l0b_tab, self.ui.l1b_tab,
                                   self.ui.l2b_tab, self.ui.l3b_tab]
         
-        self.plots: Dict[CryoPlot] = {}
+        self.plots: Dict[str, CryoPlot] = {}
         
         for linac_idx, cryo_list in enumerate([L0B, L1B + L1BHL, L2B, L3B]):
             tab_object = tab_map[linac_idx]
@@ -94,7 +95,7 @@ class CryoSignals(Display):
             
             for cryo_idx, cryo_name in enumerate(cryo_list):
                 cm_layout = QVBoxLayout()
-                cryomodule = CRYOMODULE_OBJECTS[cryo_name]
+                cryomodule = MACHINE.cryomodules[cryo_name]
                 cryo_plot = CryoPlot(cryomodule)
                 # readbacks = CryoReadbacks(cryomodule).main_layout
                 cm_layout.addWidget(cryo_plot)
