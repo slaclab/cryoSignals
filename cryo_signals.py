@@ -59,7 +59,7 @@ class CryoPlot(PyDMTimePlot):
         
         self.aact_axis = self.addAxis(plot_data_item=None, name="Amplitude Sum",
                                       orientation="right",
-                                      label="Amplitude Sum (MV)", min_range=0, max_range=133,
+                                      label="Amplitude Sum (MV)", min_range=0, max_range=160,
                                       enable_auto_range=False)
         self.aact_curve = self.addYChannel(y_channel=cryomodule.pv_addr("AACTMEANSUM"),
                                            yAxisName="Amplitude Sum")
